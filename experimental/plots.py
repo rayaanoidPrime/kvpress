@@ -400,18 +400,22 @@ def plot_crossover_comparison(df, save_path):
             for m in methods:
                 if m in sub2.index:
                     vals.append(sub2.loc[m, "delta_ppl"])
-                    cols.append(axis_colors.get(sub2.loc[m, "compression_axis"], GRAY))
+                    hatch = "" if target == "2x" else "//"
+                    cols.append((axis_colors.get(sub2.loc[m, "compression_axis"], GRAY), hatch))
                 else:
                     vals.append(0)
-                    cols.append(GRAY)
+                    hatch = "" if target == "2x" else "//"
+                    cols.append((GRAY, hatch))
             offset = w * (ti - 0.5)
             for mi2, m in enumerate(methods):
-                ax.bar(x[mi2] + offset, vals[mi2], w, color=cols[mi2],
-                       alpha=0.8, label=target if mi2 == 0 else "")
+                ax.bar(x[mi2] + offset, vals[mi2], w, color=cols[mi2][0],
+                       hatch=cols[mi2][1], edgecolor="white", linewidth=0.5,
+                       alpha=0.85, label=target if mi2 == 0 else "")
         ax.set_title(mn)
         ax.set_xticks(x)
         ax.set_xticklabels(methods, rotation=45, ha="right", fontsize=8)
-        ax.set_ylabel("Delta Perplexity")
+        ax.set_ylabel("Delta Perplexity (log scale)")
+        ax.set_yscale("symlog")
         ax.axhline(y=0, color=GRAY, linestyle="-", linewidth=0.5)
         ax.legend(fontsize=8)
     fig.tight_layout()

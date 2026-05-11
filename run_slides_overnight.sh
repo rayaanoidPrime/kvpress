@@ -31,13 +31,13 @@ echo "==========================================="
 # run_slide s07_attention_kl
 # run_slide s08_eviction
 
-# Phase 3: PPL sweeps (heaviest)
-run_slide s15_ppl_sweep
-run_slide s16_ppl_vs_bits
+# # Phase 3: PPL sweeps (heaviest)
+# run_slide s15_ppl_sweep
+# run_slide s16_ppl_vs_bits
 
-# Phase 4: More model runs
+# # Phase 4: More model runs
 run_slide s17_crossover
-run_slide s18_needle
+#run_slide s18_needle
 
 echo ""
 echo "==========================================="
