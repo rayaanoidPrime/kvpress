@@ -312,7 +312,8 @@ def plot_ppl_vs_ratio(df, save_path, title):
         ax.plot(sub["effective_compression_ratio"], sub["perplexity"],
                 marker="o", label=cn, color=color, linewidth=1.5)
     ax.set_xlabel("Effective Compression Ratio")
-    ax.set_ylabel("Perplexity")
+    ax.set_ylabel("Perplexity (log scale)")
+    ax.set_yscale("log")
     ax.set_title(title)
     ax.legend(fontsize=7, ncol=2)
     ax.set_facecolor("white")
@@ -320,6 +321,7 @@ def plot_ppl_vs_ratio(df, save_path, title):
     fig.tight_layout()
     fig.savefig(save_path, dpi=150, bbox_inches="tight")
     plt.close(fig)
+
 
 def plot_ppl_vs_bits(df, save_path):
     families = {"Quantization": ["quant_int8", "quant_int4"],
@@ -355,7 +357,8 @@ def plot_ppl_vs_bits(df, save_path):
                     ax.plot(xs, ys, marker="o", label=family, color=family_colors[family], linewidth=2)
             ax.set_title(f"{mn} {ctx}")
             ax.set_xlabel("Bits")
-            ax.set_ylabel("Perplexity")
+            ax.set_ylabel("Perplexity (log scale)")
+            ax.set_yscale("log")
             ax.legend(fontsize=7)
     fig.tight_layout()
     fig.savefig(save_path, dpi=150, bbox_inches="tight")
@@ -370,7 +373,8 @@ def plot_eviction_ppl_sweep(df, save_path):
         ax.plot(sub["compression_ratio"], sub["perplexity"],
                 marker="o", label=pn, color=colors.get(pn, GRAY), linewidth=2)
     ax.set_xlabel("Compression Ratio")
-    ax.set_ylabel("Perplexity")
+    ax.set_ylabel("Perplexity (log scale)")
+    ax.set_yscale("log")
     ax.legend()
     ax.set_facecolor("white")
     fig.patch.set_facecolor("white")

@@ -41,12 +41,15 @@ def measure_perplexity(
     prefix_len = max_length // 2
     cont_len = max_length // 2
 
-    prefix_ids = tokenize(tokenizer, context, max_length=prefix_len)
-    prefix_ids = prefix_ids[:, :prefix_len]
-    n_prefix = prefix_ids.shape[1]
+    full_ids = tokenize(tokenizer, context, max_length=max_length)
+    full_ids = full_ids[0, :max_length]
+    n_full = full_ids.shape[0]
+    prefix_ids = full_ids[:prefix_len].unsqueeze(0)
+    n_prefix = min(prefix_ids.shape[1], prefix_len)
 
-    cont_ids = tokenize(tokenizer, context, max_length=cont_len)
-    cont_ids = cont_ids[:, :cont_len]
+    cont_start = n_prefix
+    cont_end = min(cont_start + cont_len, n_full)
+    cont_ids = full_ids[cont_start:cont_end].unsqueeze(0)
     n_cont = cont_ids.shape[1]
 
     t0 = time.perf_counter()
